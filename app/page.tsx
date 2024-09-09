@@ -1194,21 +1194,22 @@ export default function Component() {
     const touchStart = (e: TouchEvent) => {
       startY = e.touches[0].clientY;
     };
-
     const touchEnd = (e: TouchEvent) => {
       const endY = e.changedTouches[0].clientY;
       const diffY = startY - endY;
 
+      const targetElement = e.target as Element | null;
+
       if (
         diffY > threshold &&
-        e.target &&
-        !e.target.closest(".chevron-button")
+        targetElement &&
+        !targetElement.closest(".chevron-button")
       ) {
         handleNextCard(); // Simulate swipe up
       } else if (
         diffY < -threshold &&
-        e.target &&
-        !e.target.closest(".chevron-button")
+        targetElement &&
+        !targetElement.closest(".chevron-button")
       ) {
         handlePreviousCard(); // Simulate swipe down
       }
