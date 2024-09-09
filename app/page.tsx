@@ -1199,10 +1199,10 @@ export default function Component() {
       const endY = e.changedTouches[0].clientY;
       const diffY = startY - endY;
 
-      if (diffY > threshold) {
-        handleNextCard();
-      } else if (diffY < -threshold) {
-        handlePreviousCard();
+      if (diffY > threshold && !e.target.closest(".chevron-button")) {
+        handleNextCard(); // Simulate swipe up
+      } else if (diffY < -threshold && !e.target.closest(".chevron-button")) {
+        handlePreviousCard(); // Simulate swipe down
       }
     };
 
