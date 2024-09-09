@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["lucide-react"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
