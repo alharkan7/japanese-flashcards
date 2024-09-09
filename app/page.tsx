@@ -1236,7 +1236,7 @@ export default function Component() {
           onClick={() => setSelectedType("hiragana")}
           className={`rounded-full px-6 py-2 text-lg font-semibold ${
             selectedType === "hiragana" ? "text-white" : "text-gray-600"
-          }`}
+          }`} // Changed text color to white when selected
         >
           Hiragana
         </Button>
@@ -1245,19 +1245,11 @@ export default function Component() {
           onClick={() => setSelectedType("katakana")}
           className={`rounded-full px-6 py-2 text-lg font-semibold ${
             selectedType === "katakana" ? "text-white" : "text-gray-600"
-          }`}
+          }`} // Changed text color to white when selected
         >
           Katakana
         </Button>
       </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full"
-        onClick={handlePreviousCard}
-      >
-        Chevron Up
-      </Button>
       <div className="relative w-full max-w-sm flex-grow flex flex-col justify-center perspective-1000">
         <div
           className={`relative w-full h-[70vh] transition-transform duration-300 transform-style-3d ${
@@ -1281,18 +1273,93 @@ export default function Component() {
             }`}
             onClick={handleCardClick}
           >
-            Card Content
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePreviousCard();
+              }}
+              className="self-center rounded-full"
+            >
+              <ChevronUp className="h-6 w-6" />
+            </Button>
+            <div className="flex-grow flex items-center justify-center">
+              {currentCard.japanese}
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNextCard();
+              }}
+              className="self-center rounded-full"
+            >
+              <ChevronDown className="h-6 w-6" />
+            </Button>
+          </Card>
+          <Card
+            className={`absolute w-full h-full flex flex-col items-center justify-between p-4 text-8xl font-bold cursor-pointer transition-all duration-500 backface-hidden rotate-y-180 rounded-3xl ${
+              cardState === "correct"
+                ? "bg-green-100"
+                : cardState === "incorrect"
+                ? "bg-red-100"
+                : "bg-white"
+            }`}
+            onClick={handleCardClick}
+          >
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePreviousCard();
+              }}
+              className="self-center rounded-full"
+            >
+              <ChevronUp className="h-6 w-6" />
+            </Button>
+            <div className="flex-grow flex items-center justify-center rotate-y-180">
+              {currentCard.japanese}
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNextCard();
+              }}
+              className="self-center rounded-full"
+            >
+              <ChevronDown className="h-6 w-6" />
+            </Button>
           </Card>
         </div>
       </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full"
-        onClick={handleNextCard}
-      >
-        Chevron Down
-      </Button>
+      <div className="w-full max-w-sm mt-4">
+        <div className="flex items-center space-x-2">
+          <Input
+            type="text"
+            placeholder="Enter alphabet"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleCheck(); // Trigger the button action
+              }
+            }}
+            className="flex-grow rounded-full text-lg px-6 py-3 h-12 text-black" // Changed text color to black
+          />
+          <Button
+            onClick={handleCheck}
+            size="icon"
+            className="rounded-full w-12 h-12 p-0 flex items-center justify-center" // Ensure button height matches input
+          >
+            <ChevronRight className="h-6 w-6" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
