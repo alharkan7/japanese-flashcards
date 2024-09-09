@@ -1121,14 +1121,18 @@ export default function Component() {
 
   useEffect(() => {
     const allCards = Object.values(flashCardsData);
-    setCards(allCards);
+    // Shuffle the cards
+    const shuffledCards = allCards.sort(() => Math.random() - 0.5);
+    setCards(shuffledCards);
   }, []);
 
   useEffect(() => {
     const filteredCards = Object.values(flashCardsData).filter(
       (card) => card.type === selectedType
     );
-    setCards(filteredCards);
+    // Shuffle the filtered cards
+    const shuffledFilteredCards = filteredCards.sort(() => Math.random() - 0.5);
+    setCards(shuffledFilteredCards);
     setCurrentCardIndex(0);
     resetCardState();
   }, [selectedType]);
@@ -1221,14 +1225,18 @@ export default function Component() {
         <Button
           variant={selectedType === "hiragana" ? "default" : "outline"}
           onClick={() => setSelectedType("hiragana")}
-          className="rounded-full px-6 py-2 text-lg font-semibold"
+          className={`rounded-full px-6 py-2 text-lg font-semibold ${
+            selectedType === "hiragana" ? "text-white" : "text-gray-600"
+          }`} // Changed text color to white when selected
         >
           Hiragana
         </Button>
         <Button
           variant={selectedType === "katakana" ? "default" : "outline"}
           onClick={() => setSelectedType("katakana")}
-          className="rounded-full px-6 py-2 text-lg font-semibold"
+          className={`rounded-full px-6 py-2 text-lg font-semibold ${
+            selectedType === "katakana" ? "text-white" : "text-gray-600"
+          }`} // Changed text color to white when selected
         >
           Katakana
         </Button>
@@ -1304,7 +1312,7 @@ export default function Component() {
               <ChevronUp className="h-6 w-6" />
             </Button>
             <div className="flex-grow flex items-center justify-center rotate-y-180">
-              {currentCard.alphabet}
+              {currentCard.japanese}
             </div>
             <Button
               variant="ghost"
@@ -1327,12 +1335,17 @@ export default function Component() {
             placeholder="Enter alphabet"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            className="flex-grow rounded-full text-lg px-6 py-3"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleCheck(); // Trigger the button action
+              }
+            }}
+            className="flex-grow rounded-full text-lg px-6 py-3 h-12 text-black" // Changed text color to black
           />
           <Button
             onClick={handleCheck}
             size="icon"
-            className="rounded-full w-12 h-12 p-0 flex items-center justify-center"
+            className="rounded-full w-12 h-12 p-0 flex items-center justify-center" // Ensure button height matches input
           >
             <ChevronRight className="h-6 w-6" />
           </Button>
