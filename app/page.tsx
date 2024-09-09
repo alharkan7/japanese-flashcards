@@ -1,101 +1,227 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState, useRef, useEffect } from 'react'
+import { ChevronRight, ChevronUp, ChevronDown } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card } from "@/components/ui/card"
+
+interface FlashCard {
+  type: 'hiragana' | 'katakana'
+  japanese: string
+  alphabet: string
+}
+
+const flashCardsData: Record<string, FlashCard> = {
+  '1': { type: 'hiragana', japanese: 'あ', alphabet: 'a' },
+  '2': { type: 'hiragana', japanese: 'い', alphabet: 'i' },
+  '3': { type: 'katakana', japanese: 'ア', alphabet: 'a' },
+  '4': { type: 'katakana', japanese: 'イ', alphabet: 'i' },
+}
+
+export default function Component() {
+  const [cards, setCards] = useState<FlashCard[]>([])
+  const [currentCardIndex, setCurrentCardIndex] = useState(0)
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [userInput, setUserInput] = useState('')
+  const [cardState, setCardState] = useState<'default' | 'correct' | 'incorrect'>('default')
+  const [selectedType, setSelectedType] = useState<'hiragana' | 'katakana'>('hiragana')
+  const [isAnimating, setIsAnimating] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const allCards = Object.values(flashCardsData)
+    setCards(allCards)
+  }, [])
+
+  useEffect(() => {
+    const filteredCards = Object.values(flashCardsData).filter(card => card.type === selectedType)
+    setCards(filteredCards)
+    setCurrentCardIndex(0)
+    resetCardState()
+  }, [selectedType])
+
+  const handleCheck = () => {
+    if (userInput.toLowerCase() === cards[currentCardIndex].alphabet.toLowerCase()) {
+      setCardState('correct')
+    } else {
+      setCardState('incorrect')
+    }
+    setIsFlipped(true)
+  }
+
+  const handleCardClick = () => {
+    setIsFlipped(!isFlipped)
+    if (isFlipped) {
+      setCardState('default')
+      setUserInput('')
+    }
+  }
+
+  const handleNextCard = () => {
+    if (isAnimating) return
+    setIsAnimating(true)
+    setTimeout(() => {
+      setCurrentCardIndex((prevIndex) => (prevIndex + 1) % cards.length)
+      resetCardState()
+      setIsAnimating(false)
+    }, 300)
+  }
+
+  const handlePreviousCard = () => {
+    if (isAnimating) return
+    setIsAnimating(true)
+    setTimeout(() => {
+      setCurrentCardIndex((prevIndex) => (prevIndex - 1 + cards.length) % cards.length)
+      resetCardState()
+      setIsAnimating(false)
+    }, 300)
+  }
+
+  const resetCardState = () => {
+    setIsFlipped(false)
+    setCardState('default')
+    setUserInput('')
+  }
+
+  useEffect(() => {
+    const card = cardRef.current
+    if (!card) return
+
+    let startY: number
+    const threshold = 50
+
+    const touchStart = (e: TouchEvent) => {
+      startY = e.touches[0].clientY
+    }
+
+    const touchEnd = (e: TouchEvent) => {
+      const endY = e.changedTouches[0].clientY
+      const diffY = startY - endY
+
+      if (diffY > threshold) {
+        handleNextCard()
+      } else if (diffY < -threshold) {
+        handlePreviousCard()
+      }
+    }
+
+    card.addEventListener('touchstart', touchStart)
+    card.addEventListener('touchend', touchEnd)
+
+    return () => {
+      card.removeEventListener('touchstart', touchStart)
+      card.removeEventListener('touchend', touchEnd)
+    }
+  }, [])
+
+  if (cards.length === 0) return <div>Loading...</div>
+
+  const currentCard = cards[currentCardIndex]
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen flex flex-col items-center justify-between p-4 bg-gray-100">
+      <div className="w-full flex justify-center space-x-4 mb-4">
+        <Button
+          variant={selectedType === 'hiragana' ? 'default' : 'outline'}
+          onClick={() => setSelectedType('hiragana')}
+          className="rounded-full px-6 py-2 text-lg font-semibold"
+        >
+          Hiragana
+        </Button>
+        <Button
+          variant={selectedType === 'katakana' ? 'default' : 'outline'}
+          onClick={() => setSelectedType('katakana')}
+          className="rounded-full px-6 py-2 text-lg font-semibold"
+        >
+          Katakana
+        </Button>
+      </div>
+      <div className="relative w-full max-w-sm flex-grow flex flex-col justify-center perspective-1000">
+        <div
+          className={`relative w-full h-[70vh] transition-transform duration-300 transform-style-3d ${
+            isAnimating ? (isFlipped ? 'translate-y-full' : '-translate-y-full') : ''
+          }`}
+        >
+          <Card
+            ref={cardRef}
+            className={`absolute w-full h-full flex flex-col items-center justify-between p-4 text-8xl font-bold cursor-pointer transition-all duration-500 backface-hidden rounded-3xl ${
+              isFlipped ? 'rotate-y-180' : ''
+            } ${
+              cardState === 'correct'
+                ? 'bg-green-100'
+                : cardState === 'incorrect'
+                ? 'bg-red-100'
+                : 'bg-white'
+            }`}
+            onClick={handleCardClick}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => { e.stopPropagation(); handlePreviousCard(); }}
+              className="self-center rounded-full"
+            >
+              <ChevronUp className="h-6 w-6" />
+            </Button>
+            <div className="flex-grow flex items-center justify-center">
+              {currentCard.japanese}
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => { e.stopPropagation(); handleNextCard(); }}
+              className="self-center rounded-full"
+            >
+              <ChevronDown className="h-6 w-6" />
+            </Button>
+          </Card>
+          <Card
+            className={`absolute w-full h-full flex flex-col items-center justify-between p-4 text-8xl font-bold cursor-pointer transition-all duration-500 backface-hidden rotate-y-180 rounded-3xl ${
+              cardState === 'correct'
+                ? 'bg-green-100'
+                : cardState === 'incorrect'
+                ? 'bg-red-100'
+                : 'bg-white'
+            }`}
+            onClick={handleCardClick}
           >
-            Read our docs
-          </a>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => { e.stopPropagation(); handlePreviousCard(); }}
+              className="self-center rounded-full"
+            >
+              <ChevronUp className="h-6 w-6" />
+            </Button>
+            <div className="flex-grow flex items-center justify-center rotate-y-180">
+              {currentCard.alphabet}
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => { e.stopPropagation(); handleNextCard(); }}
+              className="self-center rounded-full"
+            >
+              <ChevronDown className="h-6 w-6" />
+            </Button>
+          </Card>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+      </div>
+      <div className="w-full max-w-sm mt-4">
+        <div className="flex items-center space-x-2">
+          <Input
+            type="text"
+            placeholder="Enter alphabet"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            className="flex-grow rounded-full text-lg px-6 py-3"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <Button onClick={handleCheck} size="icon" className="rounded-full w-12 h-12 p-0 flex items-center justify-center">
+            <ChevronRight className="h-6 w-6" />
+          </Button>
+        </div>
+      </div>
     </div>
-  );
+  )
 }
