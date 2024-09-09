@@ -1273,31 +1273,9 @@ export default function Component() {
             }`}
             onClick={handleCardClick}
           >
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePreviousCard();
-              }}
-              className="self-center rounded-full"
-            >
-              <ChevronUp className="h-6 w-6" />
-            </Button>
             <div className="flex-grow flex items-center justify-center">
               {currentCard.japanese}
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNextCard();
-              }}
-              className="self-center rounded-full"
-            >
-              <ChevronDown className="h-6 w-6" />
-            </Button>
           </Card>
           <Card
             className={`absolute w-full h-full flex flex-col items-center justify-between p-4 text-8xl font-bold cursor-pointer transition-all duration-500 backface-hidden rotate-y-180 rounded-3xl ${
@@ -1309,31 +1287,9 @@ export default function Component() {
             }`}
             onClick={handleCardClick}
           >
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePreviousCard();
-              }}
-              className="self-center rounded-full"
-            >
-              <ChevronUp className="h-6 w-6" />
-            </Button>
             <div className="flex-grow flex items-center justify-center rotate-y-180">
-              {currentCard.japanese}
+              {currentCard.alphabet}
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNextCard();
-              }}
-              className="self-center rounded-full"
-            >
-              <ChevronDown className="h-6 w-6" />
-            </Button>
           </Card>
         </div>
       </div>
