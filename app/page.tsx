@@ -1230,7 +1230,10 @@ export default function Component() {
       <div className="w-full flex justify-center space-x-4 mb-4 mt-8">
         <Button
           variant={selectedType === "hiragana" ? "default" : "outline"}
-          onClick={() => setSelectedType("hiragana")}
+          onClick={() => {
+            setSelectedType("hiragana");
+            setCurrentCardIndex(0); // Reset index to show the first card immediately
+          }}
           className={`rounded-full font-bold ${
             selectedType === "hiragana" ? "text-white" : "text-gray-800"
           }`} // Conditional text color
@@ -1239,7 +1242,10 @@ export default function Component() {
         </Button>
         <Button
           variant={selectedType === "katakana" ? "default" : "outline"}
-          onClick={() => setSelectedType("katakana")}
+          onClick={() => {
+            setSelectedType("katakana");
+            setCurrentCardIndex(0); // Reset index to show the first card immediately
+          }}
           className={`rounded-full font-bold ${
             selectedType === "katakana" ? "text-white" : "text-gray-800"
           }`} // Conditional text color
