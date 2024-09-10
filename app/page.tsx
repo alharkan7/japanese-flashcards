@@ -1227,7 +1227,7 @@ export default function Component() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-between p-4 bg-gray-100">
-      <div className="w-full flex justify-center space-x-4 mb-4">
+      <div className="w-full flex justify-center space-x-4 mb-4 mt-8">
         <Button
           variant={selectedType === "hiragana" ? "default" : "outline"}
           onClick={() => setSelectedType("hiragana")}
@@ -1285,7 +1285,7 @@ export default function Component() {
           <ChevronDown className="h-6 w-6 text-gray-800" />
         </Button>
       </div>
-      <div className="w-full max-w-sm mt-4">
+      <div className="w-full max-w-sm mt-4 mb-16">
         <div className="flex items-center space-x-2">
           <Input
             type="text"
