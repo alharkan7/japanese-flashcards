@@ -1119,8 +1119,11 @@ export default function Component() {
   };
 
   const [cards, setCards] = useState<FlashCard[]>([]);
-  const [shuffledCards, setShuffledCards] = useState<FlashCard[]>(() => shuffleArray([...flashCardsData]));
+  const allCards = Object.values(flashCardsData);
+
+  const [shuffledCards, setShuffledCards] = useState<FlashCard[]>(shuffleArray(allCards));
   const [currentCardIndex, setCurrentCardIndex] = useState(() => Math.floor(Math.random() * shuffledCards.length));
+  
   const [isFlipped, setIsFlipped] = useState(false);
   const [userInput, setUserInput] = useState("");
 
@@ -1130,7 +1133,7 @@ export default function Component() {
   const [selectedType, setSelectedType] = useState<
     "hiragana" | "katakana"
   >("hiragana");
-  
+
   const cardRef = useRef<HTMLDivElement>(null);
 
 
