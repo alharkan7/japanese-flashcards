@@ -1302,6 +1302,7 @@ export default function Component() {
               if (e.key === 'Enter') {
                 handleCheck();
               }
+            }}
             className="flex-grow text-black rounded-full" // Added text-black for better contrast
           />
           <Button
