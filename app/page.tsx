@@ -1108,27 +1108,6 @@ const flashCardsData: Record<string, FlashCard> = {
 };
 
 export default function Component() {
-  const [cards, setCards] = useState<FlashCard[]>([]);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [userInput, setUserInput] = useState("");
-  const [cardState, setCardState] = useState<
-    "default" | "correct" | "incorrect"
-  >("default");
-  const [selectedType, setSelectedType] = useState<
-    "hiragana" | "katakana"
-  >("hiragana");
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const [shuffledCards, setShuffledCards] = useState<FlashCard[]>([]); // New state for shuffled cards
-
-  useEffect(() => {
-    // Initialize cards with all data and shuffle them
-    const allCards = Object.values(flashCardsData);
-    const shuffled = shuffleArray(allCards);
-    setCards(shuffled);
-    setShuffledCards(shuffled); // Store shuffled cards
-  }, []);
 
   // Function to shuffle an array
   const shuffleArray = (array: FlashCard[]) => {
@@ -1138,6 +1117,30 @@ export default function Component() {
     }
     return array;
   };
+
+  const [cards, setCards] = useState<FlashCard[]>([]);
+  const [shuffledCards, setShuffledCards] = useState<FlashCard[]>(() => shuffleArray([...flashCardsData]));
+  const [currentCardIndex, setCurrentCardIndex] = useState(() => Math.floor(Math.random() * shuffledCards.length));
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [userInput, setUserInput] = useState("");
+
+  const [cardState, setCardState] = useState<
+    "default" | "correct" | "incorrect"
+  >("default");
+  const [selectedType, setSelectedType] = useState<
+    "hiragana" | "katakana"
+  >("hiragana");
+  
+  const cardRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    // Initialize cards with all data and shuffle them
+    const allCards = Object.values(flashCardsData);
+    const shuffled = shuffleArray(allCards);
+    setCards(shuffled);
+    setShuffledCards(shuffled); // Store shuffled cards
+  }, []);
 
   useEffect(() => {
     // Filter cards based on selected type
@@ -1232,7 +1235,7 @@ export default function Component() {
           variant={selectedType === "hiragana" ? "default" : "outline"}
           onClick={() => {
             setSelectedType("hiragana");
-            //setCurrentCardIndex(0); // Reset index to show the first card immediately
+            setCurrentCardIndex(0); // Reset index to show the first card immediately
             handleNextCard;
           }}
           className={`rounded-full font-bold ${
@@ -1245,7 +1248,7 @@ export default function Component() {
           variant={selectedType === "katakana" ? "default" : "outline"}
           onClick={() => {
             setSelectedType("katakana");
-            //setCurrentCardIndex(0); // Reset index to show the first card immediately
+            setCurrentCardIndex(0); // Reset index to show the first card immediately
             handleNextCard;
           }}
           className={`rounded-full font-bold ${
