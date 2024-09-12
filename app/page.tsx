@@ -1298,6 +1298,10 @@ export default function Component() {
             placeholder="Enter alphabet"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleCheck();
+              }
             className="flex-grow text-black rounded-full" // Added text-black for better contrast
           />
           <Button
