@@ -1115,9 +1115,9 @@ export default function Component() {
   const [cardState, setCardState] = useState<
     "default" | "correct" | "incorrect"
   >("default");
-  const [selectedType, setSelectedType] = useState<"hiragana" | "katakana">(
-    "hiragana"
-  );
+  const [selectedType, setSelectedType] = useState<
+    "hiragana" | "katakana"
+  >("hiragana");
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [shuffledCards, setShuffledCards] = useState<FlashCard[]>([]); // New state for shuffled cards
@@ -1232,7 +1232,8 @@ export default function Component() {
           variant={selectedType === "hiragana" ? "default" : "outline"}
           onClick={() => {
             setSelectedType("hiragana");
-            setCurrentCardIndex(0); // Reset index to show the first card immediately
+            //setCurrentCardIndex(0); // Reset index to show the first card immediately
+            handleNextCard;
           }}
           className={`rounded-full font-bold ${
             selectedType === "hiragana" ? "text-white" : "text-gray-800"
@@ -1244,7 +1245,8 @@ export default function Component() {
           variant={selectedType === "katakana" ? "default" : "outline"}
           onClick={() => {
             setSelectedType("katakana");
-            setCurrentCardIndex(0); // Reset index to show the first card immediately
+            //setCurrentCardIndex(0); // Reset index to show the first card immediately
+            handleNextCard;
           }}
           className={`rounded-full font-bold ${
             selectedType === "katakana" ? "text-white" : "text-gray-800"
