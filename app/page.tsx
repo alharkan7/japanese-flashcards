@@ -1156,7 +1156,9 @@ export default function Component() {
   };
 
   const handleNextCard = () => {
-    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % cards.length);
+    const randomIndex = Math.floor(Math.random() * cards.length);
+    setCurrentCardIndex(randomIndex);
+    //setCurrentCardIndex((prevIndex) => (prevIndex + 1) % cards.length);
     resetCardState();
   };
 
