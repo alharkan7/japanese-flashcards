@@ -1149,7 +1149,14 @@ export default function Component() {
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
-    cardRef.current?.classList.add(isFlipped ? "flip-out" : "flip-in"); // Change animation based on flip state
+    const animationClass = isFlipped ? "flip-out" : "flip-in";
+    cardRef.current?.classList.add(animationClass);
+
+    // Remove the animation class after the animation duration
+    setTimeout(() => {
+      cardRef.current?.classList.remove(animationClass);
+    }, 600); // Match this duration with your CSS animation duration
+
     if (isFlipped) {
       setCardState("default");
       setUserInput("");
