@@ -1157,17 +1157,22 @@ export default function Component() {
   };
 
   const handleNextCard = () => {
-    const randomIndex = Math.floor(Math.random() * cards.length);
-    setCurrentCardIndex(randomIndex);
-    //setCurrentCardIndex((prevIndex) => (prevIndex + 1) % cards.length);
-    resetCardState();
+    setCardPosition(-100); // Move card up
+    setTimeout(() => {
+      const randomIndex = Math.floor(Math.random() * cards.length);
+      setCurrentCardIndex(randomIndex);
+      setCardPosition(0); // Reset position after animation
+    }, 300); // Match this duration with your CSS transition duration
   };
 
   const handlePreviousCard = () => {
-    setCurrentCardIndex(
-      (prevIndex) => (prevIndex - 1 + cards.length) % cards.length
-    );
-    resetCardState();
+    setCardPosition(100); // Move card down
+    setTimeout(() => {
+      setCurrentCardIndex(
+        (prevIndex) => (prevIndex - 1 + cards.length) % cards.length
+      );
+      setCardPosition(0); // Reset position after animation
+    }, 300); // Match this duration with your CSS transition duration
   };
 
   const resetCardState = () => {
@@ -1228,6 +1233,8 @@ export default function Component() {
     }
   };
 
+  const [cardPosition, setCardPosition] = useState(0); // New state for card position
+
   return (
     <html lang="en">
             <head>
@@ -1268,6 +1275,7 @@ export default function Component() {
         </Button>
         <Card
           ref={cardRef}
+          style={{ transform: `translateY(${cardPosition}%)` }} // Apply position change
           className={`w-full aspect-square flex items-center justify-center text-8xl font-bold cursor-pointer transition-all duration-300 ${
             isFlipped ? "rotate-y-180" : ""
           } ${
