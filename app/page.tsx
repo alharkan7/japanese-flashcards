@@ -1210,16 +1210,22 @@ export default function Component() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-between p-4 bg-gray-100">
-      <div className="w-full flex justify-center space-x-4 mb-4">
+      <div className="w-full flex justify-center space-x-4 mb-4 mt-8">
         <Button
           variant={selectedType === "hiragana" ? "default" : "outline"}
           onClick={() => setSelectedType("hiragana")}
+          className={`rounded-full font-bold ${
+            selectedType === "hiragana" ? "text-white" : "text-gray-800"
+          }`}
         >
           Hiragana
         </Button>
         <Button
           variant={selectedType === "katakana" ? "default" : "outline"}
           onClick={() => setSelectedType("katakana")}
+          className={`rounded-full font-bold ${
+            selectedType === "katakana" ? "text-white" : "text-gray-800"
+          }`}
         >
           Katakana
         </Button>
@@ -1229,9 +1235,9 @@ export default function Component() {
           variant="ghost"
           size="icon"
           onClick={handlePreviousCard}
-          className="absolute -top-12 left-1/2 transform -translate-x-1/2"
+          className="absolute -top-12 left-1/2 transform -translate-x-1/2 rounded-full"
         >
-          <ChevronUp className="h-6 w-6" />
+          <ChevronUp className="h-6 w-6 text-gray-800" />
         </Button>
         <Card
           ref={cardRef}
@@ -1257,21 +1263,30 @@ export default function Component() {
           variant="ghost"
           size="icon"
           onClick={handleNextCard}
-          className="absolute -bottom-12 left-1/2 transform -translate-x-1/2"
+          className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 rounded-full"
         >
-          <ChevronDown className="h-6 w-6" />
+          <ChevronDown className="h-6 w-6 text-gray-800" />
         </Button>
       </div>
-      <div className="w-full max-w-sm mt-4">
+      <div className="w-full max-w-sm mt-4 mb-16">
         <div className="flex items-center space-x-2">
           <Input
             type="text"
             placeholder="Enter alphabet"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            className="flex-grow"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleCheck();
+              }
+            }}
+            className="flex-grow text-black rounded-full"
           />
-          <Button onClick={handleCheck} size="icon">
+          <Button
+          onClick={handleCheck} 
+          size="icon"
+          className="rounded-full w-10 h-10"
+          >
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
