@@ -1210,6 +1210,23 @@ export default function Component() {
 
   const currentCard = cards[currentCardIndex];
 
+  let touchStartY: number;
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    touchStartY = event.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent) => {
+    const touchEndY = event.changedTouches[0].clientY;
+    const swipeDistance = touchStartY - touchEndY;
+
+    if (swipeDistance > 50) {
+      handleNextCard(); // Swipe Up
+    } else if (swipeDistance < -50) {
+      handlePreviousCard(); // Swipe Down
+    }
+  };
+
   return (
     <html lang="en">
             <head>
@@ -1240,7 +1257,6 @@ export default function Component() {
         </Button>
       </div>
       <div className="relative w-full max-w-sm">
-        {/*
         <Button
           variant="ghost"
           size="icon"
@@ -1249,7 +1265,6 @@ export default function Component() {
         >
           <ChevronUp className="h-6 w-6 text-gray-800" />
         </Button>
-        */}
         <Card
           ref={cardRef}
           className={`w-full aspect-square flex items-center justify-center text-8xl font-bold cursor-pointer transition-all duration-300 ${
@@ -1262,6 +1277,8 @@ export default function Component() {
               : ""
           }`}
           onClick={handleCardClick}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <div className={`${isFlipped ? "hidden" : ""}`}>
             {currentCard.japanese}
