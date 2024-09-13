@@ -1156,6 +1156,8 @@ export default function Component() {
     }
   };
 
+  const [cardPosition, setCardPosition] = useState(0); // New state for card position
+
   const handleNextCard = () => {
     setCardPosition(-100); // Move card up
     setTimeout(() => {
@@ -1233,7 +1235,6 @@ export default function Component() {
     }
   };
 
-  const [cardPosition, setCardPosition] = useState(0); // New state for card position
 
   return (
     <html lang="en">
