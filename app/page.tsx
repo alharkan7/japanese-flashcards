@@ -1209,6 +1209,13 @@ export default function Component() {
   const currentCard = cards[currentCardIndex];
 
   return (
+    <html lang="en">
+            <head>
+        <link rel="icon" href="/favicon.ico" />
+        <title>Japanese Flashcards</title>
+        {/* Add other meta tags or links here */}
+      </head>
+      <body>
     <div className="min-h-screen flex flex-col items-center justify-between p-4 bg-gray-100">
       <div className="w-full flex justify-center space-x-4 mb-4 mt-8">
         <Button
@@ -1292,5 +1299,7 @@ export default function Component() {
         </div>
       </div>
     </div>
+    </body>
+    </html>
   );
 }
