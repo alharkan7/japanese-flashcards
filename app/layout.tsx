@@ -16,9 +16,6 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Japanese Flashcards",
   description: "Simple Hiragana/Katakana Flashcards",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
