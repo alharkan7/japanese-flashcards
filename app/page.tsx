@@ -1240,6 +1240,7 @@ export default function Component() {
         </Button>
       </div>
       <div className="relative w-full max-w-sm">
+        {/*
         <Button
           variant="ghost"
           size="icon"
@@ -1248,6 +1249,7 @@ export default function Component() {
         >
           <ChevronUp className="h-6 w-6 text-gray-800" />
         </Button>
+        */}
         <Card
           ref={cardRef}
           className={`w-full aspect-square flex items-center justify-center text-8xl font-bold cursor-pointer transition-all duration-300 ${
