@@ -1149,7 +1149,7 @@ export default function Component() {
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
-    cardRef.current?.classList.add("flip-animation");
+    cardRef.current?.classList.add(isFlipped ? "flip-out" : "flip-in"); // Change animation based on flip state
     if (isFlipped) {
       setCardState("default");
       setUserInput("");
