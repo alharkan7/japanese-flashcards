@@ -1177,7 +1177,8 @@ export default function Component() {
     setTimeout(() => {
       const previousIndex = shownIndices.pop(); // Get the last shown index
       if (previousIndex !== undefined) {
-        setCurrentCardIndex(previousIndex);
+        const randomIndex = Math.floor(Math.random() * cards.length);
+        setCurrentCardIndex(randomIndex);
         setShownIndices(shownIndices); // Update shown indices
       }
       setIsFlipped(false);
