@@ -1163,6 +1163,7 @@ export default function Component() {
     setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * cards.length);
       setCurrentCardIndex(randomIndex);
+      setCardState("default");
       setCardPosition(0); // Reset position after animation
     }, 300); // Match this duration with your CSS transition duration
   };
@@ -1173,6 +1174,7 @@ export default function Component() {
       setCurrentCardIndex(
         (prevIndex) => (prevIndex - 1 + cards.length) % cards.length
       );
+      setCardState("default");
       setCardPosition(0); // Reset position after animation
     }, 300); // Match this duration with your CSS transition duration
   };
