@@ -1158,10 +1158,13 @@ export default function Component() {
 
   const [cardPosition, setCardPosition] = useState(0); // New state for card position
 
+  const [shownIndices, setShownIndices] = useState<number[]>([]); // New state to track shown indices
+
   const handleNextCard = () => {
     setCardPosition(-100); // Move card up
     setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * cards.length);
+      setShownIndices((prev) => [...prev, randomIndex]); // Store shown index
       setCurrentCardIndex(randomIndex);
       setIsFlipped(false);
       setCardState("default");
@@ -1172,9 +1175,11 @@ export default function Component() {
   const handlePreviousCard = () => {
     setCardPosition(100); // Move card down
     setTimeout(() => {
-      setCurrentCardIndex(
-        (prevIndex) => (prevIndex - 1 + cards.length) % cards.length
-      );
+      const previousIndex = shownIndices.pop(); // Get the last shown index
+      if (previousIndex !== undefined) {
+        setCurrentCardIndex(previousIndex);
+        setShownIndices(shownIndices); // Update shown indices
+      }
       setIsFlipped(false);
       setCardState("default");
       setCardPosition(0); // Reset position after animation
