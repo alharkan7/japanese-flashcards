@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Japanese Letter Flashcards
+
+A simple web application designed to help users practice and learn Japanese letters through interactive flashcards. This project aims to provide an engaging and effective tool for language learners of all levels.
+
+## Features
+
+- Randomly displays Japanese letters for practice.
+- User-friendly interface for easy navigation.
+- Engaging flashcard format to enhance memorization.
+
+## Technologies Used
+
+- **React**: For building the user interface.
+- **JavaScript**: For application logic.
+- **CSS**: For styling the application.
+- **Vercel**: For deployment.
 
 ## Getting Started
 
-First, run the development server:
+To run this project locally, follow these steps:
+
+ **1. Clone the repository:**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/alharkan7/japanese-flashcards.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**2.  Navigate to the project directory:**
+    
+```bash
+cd japanese-flashcards
+```
+    
+**3.  Install the dependencies:**
+```bash  
+npm install
+```
+    
+**4.  Start the development server:**
+```bash
+npm start
+```
+ 
+**5.  Open your browser** 
+Visit `http://localhost:3000` to see the app in action.
+    
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This app is deployed on Vercel. You can access it [here](https://japanese-flashcards-xi.vercel.app/).
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+Contributions are welcome! If you have suggestions for improvements or features, please feel free to open an issue or submit a pull request.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Deploy on Vercel
+## Acknowledgements
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   [React](https://reactjs.org/) for the powerful framework.
+-   [Vercel](https://vercel.com/) for easy deployment.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Happy learning!
