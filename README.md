@@ -47,7 +47,7 @@ Visit `http://localhost:3000` to see the app in action.
 
 ## Deployment
 
-This app is deployed on Vercel. You can access it [here](https://japanese-flashcards-xi.vercel.app/).
+This app is deployed on Vercel. You can access it here [https://japanese-flashcards-xi.vercel.app](https://japanese-flashcards-xi.vercel.app/).
 
 ## Contributing
 
