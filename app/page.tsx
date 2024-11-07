@@ -274,7 +274,7 @@ export default function Component() {
 
             {isOpen && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                <div className="max-w-md w-full bg-white rounded-lg p-4">
+                <div className="md:max-w-md w-10/12 bg-white rounded-lg p-4">
                   <div className="flex justify-end">
                     <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-800">
                       &times;
@@ -282,9 +282,9 @@ export default function Component() {
                   </div>
                   <h2 className="text-lg font-bold mb-2">How to Use this Flashcard</h2>
                   <p className="text-gray-600 text-s mb-2">
-                  Use <b>Up</b> and <b>Down</b> arrow to change card randomly.<br />
-                  <b>Tap on the card</b> to flip it over and see the alphabet.<br />
-                  <b>Write</b> in the input field on bottom to <b>guess the alphabet</b>.<br />
+                    Use <b>Up</b> and <b>Down</b> arrow to change card randomly.<br />
+                    <b>Tap on the card</b> to flip it over and see the alphabet.<br />
+                    <b>Write</b> in the input field on bottom to <b>guess the alphabet</b>.<br />
                   </p>
                 </div>
               </div>
