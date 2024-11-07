@@ -283,8 +283,8 @@ export default function Component() {
                   <h2 className="text-lg font-bold mb-2">How to Use this Flashcard</h2>
                   <p className="text-gray-600 text-s mb-2">
                     Use <b>Up</b> and <b>Down</b> arrow to change card randomly.<br />
-                    <b>Tap on the card</b> to flip it over and see the alphabet.<br />
-                    <b>Write</b> in the input field on bottom to <b>guess the alphabet</b>.<br />
+                    <b>Tap</b> on the card to flip it over and see the alphabet.<br />
+                    <b>Write</b> in the input field guess the alphabet.<br />
                   </p>
                 </div>
               </div>
